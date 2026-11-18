@@ -1,19 +1,19 @@
 package fr.donut.fakemedia.mixin;
 
 import fr.donut.fakemedia.FakeMedia;
-import net.minecraft.client.gui.hud.ChatHud;
-import net.minecraft.text.Text;
+import net.minecraft.client.gui.components.ChatComponent;
+import net.minecraft.network.chat.Component;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
-@Mixin(ChatHud.class)
+@Mixin(ChatComponent.class)
 public class ChatHudMixin {
     @ModifyVariable(
-            method = "addMessage(Lnet/minecraft/text/Text;Lnet/minecraft/network/message/MessageSignatureData;Lnet/minecraft/client/gui/hud/MessageIndicator;)V",
+            method = "addMessage(Lnet/minecraft/network/chat/Component;Lnet/minecraft/network/chat/MessageSignature;Lnet/minecraft/client/GuiMessageTag;)V",
             at = @At("HEAD"),
             argsOnly = true)
-    private Text fakemedia$chat(Text message) {
+    private Component fakemedia$chat(Component message) {
         return FakeMedia.decorateChat(message);
     }
 }

@@ -2,43 +2,43 @@ package fr.donut.fakemedia;
 
 import com.mojang.brigadier.arguments.StringArgumentType;
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
+import net.fabricmc.fabric.api.client.command.v2.ClientCommands;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 
 public class DonutFakeMedia implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) ->
-                dispatcher.register(ClientCommandManager.literal("fakemedia")
+        ClientCommandRegistrationCallback.EVENT.register((dispatcher, buildContext) ->
+                dispatcher.register(ClientCommands.literal("fakemedia")
                         .executes(ctx -> {
                             FakeMedia.enabled = !FakeMedia.enabled;
-                            ctx.getSource().sendFeedback(Text.literal(
+                            ctx.getSource().sendFeedback(Component.literal(
                                     "FakeMedia : " + (FakeMedia.enabled ? "activé" : "désactivé")));
                             return 1;
                         })
-                        .then(ClientCommandManager.literal("texte")
-                                .then(ClientCommandManager.argument("valeur", StringArgumentType.greedyString())
+                        .then(ClientCommands.literal("texte")
+                                .then(ClientCommands.argument("valeur", StringArgumentType.greedyString())
                                         .executes(ctx -> {
                                             FakeMedia.prefixText = StringArgumentType.getString(ctx, "valeur");
-                                            ctx.getSource().sendFeedback(Text.literal(
+                                            ctx.getSource().sendFeedback(Component.literal(
                                                     "Texte du grade : " + FakeMedia.prefixText));
                                             return 1;
                                         })))
-                        .then(ClientCommandManager.literal("couleur")
-                                .then(ClientCommandManager.argument("valeur", StringArgumentType.word())
+                        .then(ClientCommands.literal("couleur")
+                                .then(ClientCommands.argument("valeur", StringArgumentType.word())
                                         .executes(ctx -> {
-                                            Formatting f = Formatting.byName(
+                                            ChatFormatting f = ChatFormatting.getByName(
                                                     StringArgumentType.getString(ctx, "valeur"));
                                             if (f == null || !f.isColor()) {
-                                                ctx.getSource().sendFeedback(Text.literal(
+                                                ctx.getSource().sendFeedback(Component.literal(
                                                         "Couleur invalide (ex: red, gold, aqua, green)"));
                                                 return 0;
                                             }
                                             FakeMedia.color = f;
-                                            ctx.getSource().sendFeedback(Text.literal("Couleur changée."));
+                                            ctx.getSource().sendFeedback(Component.literal("Couleur changée."));
                                             return 1;
                                         })))));
     }
