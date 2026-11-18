@@ -1,0 +1,4 @@
+1) Installe Java 21 + Gradle, puis dans ce dossier : gradle build
+   -> jar dans build/libs/donutfakemedia-1.0.0.jar (ignorer -sources)
+2) Ou : mets le dossier sur GitHub, onglet Actions > build > telecharge l'artefact.
+3) Mets le jar dans .minecraft/mods avec Fabric Loader + Fabric API (1.21.4).

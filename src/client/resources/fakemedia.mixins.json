@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "fr.donut.fakemedia.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "PlayerListHudMixin",
+    "PlayerEntityMixin",
+    "ChatHudMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

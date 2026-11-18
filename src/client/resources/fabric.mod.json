@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "fakemedia",
+  "version": "${version}",
+  "name": "Donut Fake Media",
+  "description": "Affiche un grade Media dans la tablist, le nametag et le chat (client uniquement).",
+  "authors": ["Donut"],
+  "icon": "assets/fakemedia/textures/media.png",
+  "license": "MIT",
+  "environment": "client",
+  "entrypoints": {
+    "client": ["fr.donut.fakemedia.DonutFakeMedia"]
+  },
+  "mixins": ["fakemedia.mixins.json"],
+  "depends": {
+    "fabricloader": ">=0.16.0",
+    "minecraft": "~1.21.4",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}
